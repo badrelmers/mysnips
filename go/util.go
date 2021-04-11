@@ -1,5 +1,6 @@
 package util
 
+
 import(
     "os"
     "os/exec"
@@ -17,7 +18,7 @@ import(
 )
 
 // https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go
-// Exported Code
+// Exported Code:
 // You may have noticed that all of the declarations in the greet.go file you called were capitalized. Go does not have the concept of public, private, or protected modifiers like other languages do. External visibility is controlled by capitalization. Types, variables, functions, and so on, that start with a capital letter are available, publicly, outside the current package. A symbol that is visible outside its package is considered to be exported.
 
 // If you add a new method to Octopus called reset, you can call it from within the greet package, but not from your main.go file, which is outside the greet package:
