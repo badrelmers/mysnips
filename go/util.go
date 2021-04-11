@@ -25,35 +25,6 @@ import(
 var ( INFOC = "\033[32m"; WARNC = "\033[33m"; ERRORC = "\033[0;1;31m"; HIDEC = "\033[37m"; INFO2C = "\033[36m"; INFO3C = "\033[0;1;35m"; INFO4C = "\033[0;1;34m";        INFOCB = "\033[0;30m\033[42m"; WARNCB = "\033[0;1;33;40;7m"; ERRORCB = "\033[0;1;37m\033[41m"; HIDECB = "\033[0;1;30m\033[47m"; INFO2CB = "\033[0;30m\033[46m"; INFO3CB = "\033[0;1;37m\033[45m"; INFO4CB = "\033[0;1;37m\033[44m";        ENDC = "\033[0m" 
 )
 
-func Test() {
-    text := "text %s text\n"
-    intt := 1234
-    
-    byte := []byte("byte\n")
-
-    mapp := map[int]string{}
-    mapp[1] = "map 1 %s test"
-    mapp[2] = "map 2\n"
-
-    jsonn,_ := json.Marshal(mapp)
-
-    slicee := []string{"one", "two", "three"}
-    slicee2 := []int{10, 200, 3000}
-
-
-    os.Remove("met2.t")
-    Append("met2.t",text)
-    Append("met2.t",intt)
-    Append("met2.t","\n")
-    Append("met2.t",byte)
-    Append("met2.t",mapp)
-    Append("met2.t","\n")
-    Append("met2.t",jsonn)
-    Append("met2.t","\n")
-    Append("met2.t",slicee)
-    Append("met2.t",slicee2)
-
-}
 
 
 
@@ -184,15 +155,31 @@ func cpdir(){
 
 
 func Rm(file string) {
-    err := os.Remove(file)
-    Err(err)
+    _, err := os.Stat(file)
+    if err == nil {
+        log.Printf("removing %s", file)
+        err := os.Remove(file)
+        Err(err)
+    } else if os.IsNotExist(err) {
+        log.Printf("file %s not exists", file)
+    } else {
+        log.Printf("file %s stat error: %v", file, err)
+    }
 }
 
 // delete directory and its contents with os.RemoveAll
 // The RemoveAll removes the directory and its contents recursively.
 func Rmrf(file string) {
-    err := os.RemoveAll(file)
-    Err(err)
+    _, err := os.Stat(file)
+    if err == nil {
+        log.Printf("removing %s", file)
+        err := os.RemoveAll(file)
+        Err(err)
+    } else if os.IsNotExist(err) {
+        log.Printf("file %s not exists", file)
+    } else {
+        log.Printf("file %s stat error: %v", file, err)
+    }
 }
 
 
