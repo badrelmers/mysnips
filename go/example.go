@@ -3,6 +3,7 @@ package main
 import(
     my "github.com/badrelmers/mysnips/go"
     "encoding/json"
+    "fmt"
 )
 
 
@@ -22,23 +23,38 @@ func main() {
     slicee2 := []int{10, 200, 3000}
 
 
-    my.Rm("met2.t")
-    my.Append("met2.t",text)
-    my.Append("met2.t",intt)
-    my.Append("met2.t","\n")
-    my.Append("met2.t",byte)
-    my.Append("met2.t",mapp)
-    my.Append("met2.t","\n")
-    my.Append("met2.t",jsonn)
-    my.Append("met2.t","\n")
-    my.Append("met2.t",slicee)
-    my.Append("met2.t",slicee2)
+    my.Rm("testAppend.t")
+    my.Append("testAppend.t",text)
+    my.Append("testAppend.t",intt)
+    my.Append("testAppend.t","\n")
+    my.Append("testAppend.t",byte)
+    my.Append("testAppend.t",mapp)
+    my.Append("testAppend.t","\n")
+    my.Append("testAppend.t",jsonn)
+    my.Append("testAppend.t","\n")
+    my.Append("testAppend.t",slicee)
+    my.Append("testAppend.t",slicee2)
 
     // ##################################
-    my.Cp("met2.t", "met2copy.t")
+    my.Cp("testAppend.t", "testAppend_copy.t")
     my.Mkdir("mkdirtest/2")
-    my.Mv("met2copy.t", "mkdirtest/2/met2copyMoved.t")
+    my.Mv("testAppend_copy.t", "mkdirtest/2/testAppend_copy_Moved.t")
     
-    my.Cp("mkdirtest", "mkdirtest2")
+    // ##################################
+    fmt.Println(my.INFOCB, "INFOC", my.ENDC)
+    fmt.Println(my.WARNCB, "WARNC", my.ENDC)
+    fmt.Println(my.ERRORCB, "ERRORC", my.ENDC)
+    fmt.Println(my.HIDECB, "HIDEC", my.ENDC)
+    fmt.Println(my.INFO2CB, "INFO2C", my.ENDC)
+    fmt.Println(my.INFO3CB, "INFO3C", my.ENDC)
+    fmt.Println(my.INFO4CB, "INFO4C", my.ENDC)
+
+    fmt.Println(my.INFOC, "INFOC", my.ENDC)
+    fmt.Println(my.WARNC, "WARNC", my.ENDC)
+    fmt.Println(my.ERRORC, "ERRORC", my.ENDC)
+    fmt.Println(my.HIDEC, "HIDEC", my.ENDC)
+    fmt.Println(my.INFO2C, "INFO2C", my.ENDC)
+    fmt.Println(my.INFO3C, "INFO3C", my.ENDC)
+    fmt.Println(my.INFO4C, "INFO4C", my.ENDC)
 
 }
