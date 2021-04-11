@@ -46,20 +46,25 @@ var (
     ENDC    = "\033[0m"                    // reset colors
 )
 
+// get date in the form 20210407_072345
+func GetDateNow() string {
+    t := time.Now()
+    return fmt.Sprintf("%d%02d%02d_%02d%02d%02d",t.Year(), t.Month(), t.Day(),t.Hour(), t.Minute(), t.Second()) 
+}
 
 
 // ####################################################################
 // https://github.com/go-rod/rod/blob/master/lib/utils/utils.go
 
-//  reads file as string
-func Read(p string) (string, error) {
-    bin, err := ioutil.ReadFile(p)
+// reads file as string
+func Read(file string) (string, error) {
+    bin, err := ioutil.ReadFile(file)
     return string(bin), err
 }
 
-// OutputFile auto creates file if not exists, it will try to detect the data type and
+// write to file: auto creates file if not exists, it will try to detect the data type and
 // auto output binary, string or json
-func Write(p string, data interface{}) error {
+func Write(file string, data interface{}) error {
     var bin []byte
 
     switch t := data.(type) {
@@ -68,7 +73,7 @@ func Write(p string, data interface{}) error {
     case string:
         bin = []byte(t)
     case io.Reader:
-        f, _ := os.OpenFile(p, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0664)
+        f, _ := os.OpenFile(file, os.O_WRONLY|os.O_CREATE|os.O_TRUNC, 0664)
         _, err := io.Copy(f, t)
         defer f.Close()
         return err
@@ -77,10 +82,12 @@ func Write(p string, data interface{}) error {
         bin = MustToJSONBytes(data)
     }
 
-    return ioutil.WriteFile(p, bin, 0664)
+    return ioutil.WriteFile(file, bin, 0664)
 }
 
-func Append(p string, data interface{}) error {
+// append to file: auto creates file if not exists, it will try to detect the data type and
+// auto output binary, string or json
+func Append(file string, data interface{}) error {
     var bin []byte
 
     switch t := data.(type) {
@@ -89,7 +96,7 @@ func Append(p string, data interface{}) error {
     case string:
         bin = []byte(t)
     case io.Reader:
-        f, _ := os.OpenFile(p, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0664)
+        f, _ := os.OpenFile(file, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0664)
         _, err := io.Copy(f, t)
         defer f.Close()
         return err
@@ -97,21 +104,19 @@ func Append(p string, data interface{}) error {
         // this will be used by map and json +++++
         bin = MustToJSONBytes(data)
     }
-
-    // return ioutil.WriteFile(p, bin, 0664)
 
 
     // If the file doesn't exist, create it, or append to the file
-    file, err := os.OpenFile(p, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0664)
+    f, err := os.OpenFile(file, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0664)
 
     if err != nil {
         log.Fatalf("error while opening the file. %v", err)
     }
 
     // close the file once program execution complete
-    defer file.Close()
+    defer f.Close()
 
-    if _, err := file.Write([]byte(bin)); err != nil {
+    if _, err := f.Write([]byte(bin)); err != nil {
         log.Fatalf("error while writing the file. %v", err)
     }
 
@@ -120,7 +125,7 @@ func Append(p string, data interface{}) error {
 
 // Mkdir makes dir recursively
 func Mkdir(path string) error {
-    return os.MkdirAll(path, 0775)
+    return os.MkdirAll(path, 0755)
 }
 
 // MustToJSONBytes encode data to json bytes
@@ -143,18 +148,20 @@ func E(args ...interface{}) []interface{} {
 }
 
 // ########################################################################
+// rename file
 func Rename(oldName, newName string) {
     err := os.Rename(oldName, newName)
     Err(err)
 }
 
-
+// move file to destination
 func Mv(oldLocation, newLocation string) {
     // os.Rename() can also move file from one location to another at same time renaming file name.
     err := os.Rename(oldLocation, newLocation)
     Err(err)
 }
 
+// copy file to destination
 func Cp(src,dst string) {
     sourceFile, err := os.Open(src)
     Err(err)
@@ -165,9 +172,10 @@ func Cp(src,dst string) {
     Err(err)
     defer newFile.Close()
  
-    bytesCopied, err := io.Copy(newFile, sourceFile)
+    // bytesCopied, err := io.Copy(newFile, sourceFile)
+    _, err = io.Copy(newFile, sourceFile)
     Err(err)
-    log.Printf("Copied %d bytes.", bytesCopied)
+    // log.Printf("Copied %d bytes.", bytesCopied)
 }
 
 // TODO:
@@ -178,9 +186,10 @@ func Cp(src,dst string) {
 // https://github.com/TryStreambits/coreutils/blob/master/io.go
 func cpdir(){
 // TODO
+fmt.Println("not yet implemented")
 }
 
-
+// delete file
 func Rm(file string) {
     _, err := os.Stat(file)
     if err == nil {
@@ -194,8 +203,7 @@ func Rm(file string) {
     }
 }
 
-// delete directory and its contents with os.RemoveAll
-// The RemoveAll removes the directory and its contents recursively.
+// remove the directory and its contents recursively.
 func Rmrf(file string) {
     _, err := os.Stat(file)
     if err == nil {
@@ -211,6 +219,7 @@ func Rmrf(file string) {
 
 
 // Temporary files and direct­ories
+
 // create temp dir
 func TempDir(dir, prefix string) string{
     dir, err := ioutil.TempDir(dir, prefix)
@@ -227,7 +236,7 @@ func TempFile(dir, prefix string) string{
     return f.Name()
 }
 
-
+// get a random number from the range
 func RandInt(min int, max int) int {
     // https://stackoverflow.com/questions/44659343/how-to-choose-a-random-number-from-the-range
     // Seed should be set once, better spot is func init()
@@ -293,7 +302,3 @@ func Err(err error) {
     }
 }
 
-func GetDateNow() string {
-    t := time.Now()
-    return fmt.Sprintf("%d%02d%02d_%02d%02d%02d",t.Year(), t.Month(), t.Day(),t.Hour(), t.Minute(), t.Second()) 
-}
