@@ -1,6 +1,5 @@
 package util
 
-
 import(
     "os"
     "os/exec"
@@ -51,6 +50,13 @@ var (
 
 // ####################################################################
 // https://github.com/go-rod/rod/blob/master/lib/utils/utils.go
+
+//  reads file as string
+func Read(p string) (string, error) {
+    bin, err := ioutil.ReadFile(p)
+    return string(bin), err
+}
+
 // OutputFile auto creates file if not exists, it will try to detect the data type and
 // auto output binary, string or json
 func Write(p string, data interface{}) error {
