@@ -1,10 +1,5 @@
 
-git clone https://github.com/badrelmers/mysnips
-cd mysnips/go
-go mod init mysnipsexample
-go mod tidy
-
-go build 
+go mod init mysnipsexample ; go mod tidy ; go build 
 
 cat main.go 
 ```go
