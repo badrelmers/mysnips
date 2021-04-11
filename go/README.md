@@ -1,4 +1,4 @@
-
+test
 go mod init mysnipsexample ; go mod tidy ; go build 
 
 cat main.go 
