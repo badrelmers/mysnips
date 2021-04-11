@@ -8,7 +8,9 @@ GONOPROXY=github.com/badrelmers/mysnips go get -u github.com/badrelmers/mysnips
 ```
 
 # test
+```
 go mod init mysnipsexample ; go mod tidy ; go build 
+```
 
 cat main.go 
 ```go
