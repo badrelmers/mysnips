@@ -45,7 +45,6 @@ var (
     INFO4CB = "\033[0;1;37m\033[44m"       // bright white on blue; 1  is needed sino 37 vuelve grey in mintty
     
     ENDC    = "\033[0m"                    // reset colors
-    ENDCXXXzzzzz    = "\033[0m"                    // reset colors
 )
 
 
