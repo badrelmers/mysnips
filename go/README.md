@@ -1,4 +1,4 @@
-# update packge
+# update package
 after editing the package it takes about 20min to be able to download it : https://stackoverflow.com/questions/58364988/go-module-not-downloading-latest-minor-version
 
 If you are using the default public proxy (proxy.golang.org), it has a cache on the mapping from latest to a specific version.
