@@ -22,9 +22,29 @@ import(
 
 // If you add a new method to Octopus called reset, you can call it from within the greet package, but not from your main.go file, which is outside the greet package:
 
-var ( INFOC = "\033[32m"; WARNC = "\033[33m"; ERRORC = "\033[0;1;31m"; HIDEC = "\033[37m"; INFO2C = "\033[36m"; INFO3C = "\033[0;1;35m"; INFO4C = "\033[0;1;34m";        INFOCB = "\033[0;30m\033[42m"; WARNCB = "\033[0;1;33;40;7m"; ERRORCB = "\033[0;1;37m\033[41m"; HIDECB = "\033[0;1;30m\033[47m"; INFO2CB = "\033[0;30m\033[46m"; INFO3CB = "\033[0;1;37m\033[45m"; INFO4CB = "\033[0;1;37m\033[44m";        ENDC = "\033[0m" 
-)
 
+
+var (
+    // ___forground______________________________________
+    INFOC   = "\033[32m"                   // green
+    WARNC   = "\033[33m"                   // yellow
+    ERRORC  = "\033[0;1;31m"               // bright red
+    HIDEC   = "\033[37m"                   // white: do not use bright white because of my mintty white template
+    INFO2C  = "\033[36m"                   // bright cyan
+    INFO3C  = "\033[0;1;35m"               // bright purple
+    INFO4C  = "\033[0;1;34m"               // blue
+    // ___background______________________________________
+    INFOCB  = "\033[0;30m\033[42m"         // black on green 
+    WARNCB  = "\033[0;1;33;40;7m"          // black on yellow ;usa invert 7; y light text 1 
+    ERRORCB = "\033[0;1;37m\033[41m"       // bright white on red
+    HIDECB  = "\033[0;1;30m\033[47m"       // hide color: white on grey (bright)
+    //HIDECB = "\033[0;1;7;30m\033[47m"    // hide color: white on grey (darker)
+    INFO2CB = "\033[0;30m\033[46m"         // black on white blue (cyan)
+    INFO3CB = "\033[0;1;37m\033[45m"       // bright white on purple
+    INFO4CB = "\033[0;1;37m\033[44m"       // bright white on blue; 1  is needed sino 37 vuelve grey in mintty
+    
+    ENDC    = "\033[0m"                    // reset colors
+)
 
 
 
