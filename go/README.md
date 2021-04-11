@@ -10,6 +10,7 @@ GONOPROXY=github.com/badrelmers/mysnips go get -u github.com/badrelmers/mysnips
 
 # test
 ```
+export GONOPROXY=github.com/badrelmers/mysnips
 go mod init mysnipsexample ; go mod tidy ; go build 
 ```
 
