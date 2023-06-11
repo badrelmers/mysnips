@@ -162,6 +162,7 @@ func Mv(oldLocation, newLocation string) {
 }
 
 // copy file to destination
+// TODO: mejorar esta function usando https://github.com/SaturnsVoid/Chrome-Password-Recovery/blob/339df5ab0577ec1f61d1af6e918e12df8f230079/Chrome%20Password%20Recovery.go#L73
 func Cp(src,dst string) {
     sourceFile, err := os.Open(src)
     Err(err)
